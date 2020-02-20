@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class VanishingPlat : MonoBehaviour
 {
-    public float Magic = 4;
-    public float Seconds = 2;
+    //Appear refers to time before platform appears
+    //Vanish refers to time after activating to vanish
+    public float Appear = 3;
+    public float Vanish = 1;
 
-    Renderer myR;
-    Collider myC;
+    Renderer Rend;
+    Collider Coll;
 
     void OnTriggerEnter(Collider other)
     {
-        myR = GetComponent<Renderer>();
-        myC = GetComponent<Collider>();
+        Rend  = GetComponent<Renderer>();
+        Coll  = GetComponent<Collider>();
 
         if (other.gameObject.name == "Player")
         {
@@ -24,17 +26,15 @@ public class VanishingPlat : MonoBehaviour
 
     IEnumerator Poof()
     {
-        yield return new WaitForSeconds(Seconds);
-        myR.enabled = false;
-        myC.enabled = false;
-        //Destroy(gameObject);
+        yield return new WaitForSeconds(Vanish);
+        Rend.enabled = false;
+        Coll.enabled = false;
     }
 
     IEnumerator Wizard()
     {
-        yield return new WaitForSeconds(Magic);
-        myR.enabled = true;
-        myC.enabled = true;
-        //gameObject.SetActive(true);
+        yield return new WaitForSeconds(Appear);
+        Rend.enabled = true;
+        Coll.enabled = true;
     }
 }
