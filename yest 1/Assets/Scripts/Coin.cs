@@ -47,15 +47,13 @@ public class Coin : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Destroy(this.gameObject);
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
+   
         /*
         linkedPlatform.GetComponent<Renderer>();
 
 
         linkedPlatform.GetComponent<Collider>();
-        */
+       */
 
     }
 }
