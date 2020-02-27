@@ -16,16 +16,17 @@ public class PlayerControllerThatLevelsUp : MonoBehaviour
     //The base move and turn speed
     public float moveSpeed = 1f;
     public float turnSpeed = 45f;
-    public float jumpHeight = 4f;
+    public float jumpHeight = 3f;
 
     //The move and turn speed with the buffs you have from leveling up.   
     public float currentMoveSpeed;
     public float currentTurnSpeed;
+    public float currentJumpHeight;
 
 
 
-    public float xp = 0;	// Amount of XP the player has
-    public float xpForNextLevel = 10;   //Xp needed to level up, the higher the level, the harder it gets. 
+    public  float xp = 0;	// Amount of XP the player has
+    public  float xpForNextLevel = 10;   //Xp needed to level up, the higher the level, the harder it gets. 
     public int level = 0;   // Level of the player
 
 
@@ -37,6 +38,7 @@ public class PlayerControllerThatLevelsUp : MonoBehaviour
         SetXpForNextLevel();
         SetCurrentMoveSpeed();
         SetCurrentTurnSpeed();
+        SetCurrentJumpHeight();
     }
 
 
@@ -44,28 +46,35 @@ public class PlayerControllerThatLevelsUp : MonoBehaviour
     // To level up you need to collect an amount of xp;
     // This starts at 10 xp
     // Each level you gain the xp required gets higher exponentially
-    // The exponential growth is slowed by scaling it by 10%
+    // The exponential growth is slowed by scaling it by 50%
 
     void SetXpForNextLevel()
     {
-        xpForNextLevel = (10f + (level * level * 0.1f));
+        xpForNextLevel = (10f + (level * level * 1.5f));
         Debug.Log("xpForNextLevel " + xpForNextLevel);
     }
 
 
 
-    // For each level, the player adds 20% to the move speed 
+    // For each level, the player adds 50% to the move speed 
     void SetCurrentMoveSpeed()
     {
-        currentMoveSpeed = this.moveSpeed + (this.moveSpeed * 0.2f * level);
+        currentMoveSpeed = this.moveSpeed + (this.moveSpeed * 0.5f * level);
         Debug.Log("currentMoveSpeed = " + currentMoveSpeed);
     }
 
-    // For each level, the player adds 20% to the turn speed 
+    // For each level, the player adds 80% to the turn speed 
     void SetCurrentTurnSpeed()
     {
-        currentTurnSpeed = this.turnSpeed + (this.turnSpeed * (level * 0.2f));
+        currentTurnSpeed = this.turnSpeed + (this.turnSpeed * (level * 0.8f));
         Debug.Log("currentTurnSpeed = " + currentTurnSpeed);
+    }
+
+    // For each level, the player adds 20% to jump height
+    void SetCurrentJumpHeight()
+    {
+        currentJumpHeight = this.jumpHeight + (this.jumpHeight * (level * 0.2f));
+        Debug.Log("currentJumpHeight = " + currentJumpHeight);
     }
 
 
@@ -77,6 +86,7 @@ public class PlayerControllerThatLevelsUp : MonoBehaviour
         SetXpForNextLevel();
         SetCurrentMoveSpeed();
         SetCurrentTurnSpeed();
+        SetCurrentJumpHeight();
 
     }
 
@@ -84,7 +94,7 @@ public class PlayerControllerThatLevelsUp : MonoBehaviour
 
 
     //a function to make the player gain the ammount of Xp the you tell it. 
-    void GainXP(int xpToGain)
+    public void GainXP(int xpToGain)
     {
         xp += xpToGain;
         Debug.Log("Gained " + xpToGain + " XP, Current Xp = " + xp + ", XP needed to reach next Level = " + xpForNextLevel);
@@ -94,7 +104,7 @@ public class PlayerControllerThatLevelsUp : MonoBehaviour
     void Update()
     {
         //Test the GainXp function by pressing the x button. 
-        if (Input.GetKeyDown(KeyCode.X) == true) { GainXP(1); }
+        if (Input.GetKeyDown(KeyCode.X) == true) { GainXP(10); }
 
 
         //LevelUp when the appropriate conditions are met.
@@ -120,7 +130,7 @@ public class PlayerControllerThatLevelsUp : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space) == true && Mathf.Abs(this.GetComponent<Rigidbody>().velocity.y) < 0.01f)
         {
-            this.GetComponent<Rigidbody>().velocity += Vector3.up * this.jumpHeight;
+            this.GetComponent<Rigidbody>().velocity += Vector3.up * this.currentJumpHeight;
         }
     }
 }

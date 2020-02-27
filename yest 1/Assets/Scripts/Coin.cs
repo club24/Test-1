@@ -20,6 +20,8 @@ public class Coin : MonoBehaviour
     public Axis axis;
     public float moveDistance;
     public float moveSpeed;
+    public int XPValue = 1;
+
     void Update()
     {
         this.transform.Rotate(0f, 2f, 0f);
@@ -45,9 +47,15 @@ public class Coin : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        
+        if (other.gameObject.tag == "Player")
+        {
+            other.gameObject.GetComponent<PlayerControllerThatLevelsUp>().GainXP(XPValue); 
+
+
+          
+        }
+
         Destroy(this.gameObject);
-
-   
-
     }
 }
