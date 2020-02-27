@@ -1,17 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-/*
-    Script: MovingPlatform
-    Author: Gareth Lockett
-    Version: 1.0
-    Description:    Simple script to be applied to a platform object. Moves the platform back and forth along a selected axis using a sine wave.
-                    Make sure to set platform up with a collider set to isTrigger = true (eg there should be a second, non-trigger collider for the character to stand on)
-                    When an object, with a rigidbody, enters the collider it will be parented to this object (eg moves with it)
-                    When the object exits the collider it will be unparented.
-*/
-
 public class MovingPlatform : MonoBehaviour
 {
     public enum Axis { X_AXIS, Y_AXIS, Z_AXIS }
